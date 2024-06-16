@@ -332,7 +332,7 @@ chmod +x catalina.sh
 ````
 ![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/603153a3-bcc8-492a-b229-eb1255c7a63f)
 
-### $\color{red} \textbf{Go \ To \ Browser \ Hit \ Public-IP \ Nginx}$
+### $\color{red} \textbf{Go \ To \ Browser \ Hit \ Public-IP:8080/student}$
 ![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/d3f4d112-daef-4dca-9c04-9e4841ba0887)
 
 
