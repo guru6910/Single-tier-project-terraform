@@ -217,10 +217,6 @@ chmod 600 terraform-key.pem
 ````
 ## ${\color{red} \textbf{Connect to Server}}$
 
-
-111111111111111111111111111111111
-
-
 **install mariadb and start**
 ````
 yum install mariadb105-server -y
@@ -257,7 +253,8 @@ use studentapp;
 	PRIMARY KEY (student_id)  
 );
 ````
-![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/1ab9f632-72dd-4310-949e-38ac82462a58)
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/d3ee794e-9b97-402a-b452-13e3056bc655)
+
 
 ````
 show tables;
