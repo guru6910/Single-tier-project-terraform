@@ -47,6 +47,19 @@ resource "aws_subnet" "subnet-1" {
   }
 }
 ````
+**create a second subnet it helps when we create a subnet group for rds**
+````
+resource "aws_subnet" "subnet-2" {
+  vpc_id = aws_vpc.vpc.id
+  cidr_block = "10.0.2.0/25"
+  availability_zone = "us-east-1b"
+  map_public_ip_on_launch = true 
+
+  tags = {
+    Name = "VM-2",
+  }
+}
+````
 **create a internet Gateway**
 ````
 resource "aws_internet_gateway" "igw" {
