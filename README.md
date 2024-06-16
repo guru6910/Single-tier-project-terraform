@@ -172,6 +172,35 @@ resource "aws_network_interface_sg_attachment" "sg2" {
   network_interface_id = aws_instance.instance.primary_network_interface_id
 }
 ````
+**Create a subnet Group for DB**
+````
+resource "aws_db_subnet_group" "subnet-group" {
+  name = "subnet-group"
+  subnet_ids = [aws_subnet.subnet-1.id,aws_subnet.subnet-2.id]
+  tags = {
+    Name = "subnet-group"
+  }
+}
+````
+**Create A database for instance**
+````
+resource "aws_db_instance" "rds" {
+  allocated_storage = 20
+  db_name = "student"
+  engine = "mariadb"
+  engine_version = "10.11.6"
+  username = "admin"
+  password = "passwd123"
+  instance_class = "db.t3.micro"
+  skip_final_snapshot = true
+  db_subnet_group_name = aws_db_subnet_group.subnet-group.name
+  vpc_security_group_ids = [aws_security_group.sg1.id]
+
+  tags = {
+    Name = "RDS"
+  }
+}
+````
 ````
 terraform plan
 ````
