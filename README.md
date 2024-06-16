@@ -1,5 +1,11 @@
 # ${\color{red} \textbf{Project : Single-tier terraform}}$
 
+**create profile with access key and secret key**
+````
+aws configure --profile <profile name>
+````
+**add provider**
+````
 terraform {
   required_providers {
     aws = {
@@ -14,7 +20,12 @@ provider "aws" {
   profile = "guru"
 
 }
-
+````
+````
+terraform init
+````
+**create a vpc**
+````
 resource "aws_vpc" "vpc" {
     cidr_block = "10.0.0.0/16"
 
@@ -22,7 +33,9 @@ resource "aws_vpc" "vpc" {
         Name = "aws_vpc",
     } 
 }
-
+````
+**create a public subnet**
+````
 resource "aws_subnet" "subnet-1" {
   vpc_id = aws_vpc.vpc.id
   cidr_block = "10.0.1.0/24"
@@ -33,7 +46,9 @@ resource "aws_subnet" "subnet-1" {
     Name = "VM-1",
   }
 }
-
+````
+**create a internet Gateway**
+````
 resource "aws_internet_gateway" "igw" {
     vpc_id = aws_vpc.vpc.id
     tags = {
@@ -41,7 +56,9 @@ resource "aws_internet_gateway" "igw" {
     }
   
 }
-
+````
+**create a public route table**
+````
 resource "aws_route_table" "RT1" {
     vpc_id = aws_vpc.vpc.id
 
@@ -52,19 +69,24 @@ resource "aws_route_table" "RT1" {
     }
 
 }
-
+````
+**add public subnet public route association**
+````
 resource "aws_route_table_association" "association" {
   subnet_id = aws_subnet.subnet-1.id
   route_table_id = aws_route_table.RT1.id
 }
-
-
+````
+**create a security group**
+````
 resource "aws_security_group" "sg1" {
   name = "single"
   description = "Allow SSH,mysql,tomcat access"
   vpc_id = aws_vpc.vpc.id
 }
-
+````
+**Add port 22,80,8080,3306 in inbound rule**
+````
 resource "aws_vpc_security_group_ingress_rule" "ssh" {
   security_group_id = aws_security_group.sg1.id
   cidr_ipv4 = "0.0.0.0/0"
@@ -97,18 +119,26 @@ resource "aws_vpc_security_group_ingress_rule" "mysql" {
   to_port = 3306
   
 }
-
+````
+**add outbount rule**
+````
 resource "aws_vpc_security_group_egress_rule" "outbound" {
   security_group_id = aws_security_group.sg1.id
   cidr_ipv4 = "0.0.0.0/0"
   ip_protocol = "-1"
 }
+````
+**create a key pair from GUI and use that key name when we creat a instance**
 
+**Add network interface with public subnet to connet to public instance**
+````
 resource "aws_network_interface" "network1" {
   subnet_id = aws_subnet.subnet-1.id
   private_ip = "10.0.1.100/24"
 }
-
+````
+**Create a instance**
+````
 resource "aws_instance" "instance" {
   ami = "ami-08a0d1e16fc3f61ea"
   instance_type = "t2.micro"
@@ -121,8 +151,27 @@ resource "aws_instance" "instance" {
     Name = "VM-1"
   }
 }
+````
+**Attach the security group to instance**
+````
 resource "aws_network_interface_sg_attachment" "sg2" {
   security_group_id = aws_security_group.sg1.id
   network_interface_id = aws_instance.instance.primary_network_interface_id
-
 }
+````
+````
+terraform plan
+````
+````
+terraform apply -auto-approve
+````
+**Create a file with the name of terraform-key.pem and add a key content which key we assigned with instances**
+````
+vim terraform-key.pem
+````
+**give 600 permission to file**
+````
+chmod 600 terraform-key.pem
+````
+## ${\color{red} \textbf{Connect to Server}}$
+
