@@ -180,6 +180,35 @@ chmod 600 terraform-key.pem
 yum install java -y
 ````
 **install binary package of apache-tomcat with zip link from its website**
-
+````
+curl -O https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.100/bin/apache-tomcat-8.5.100.zip
+````
 ![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/4ae1ac24-b711-4c21-af65-ceb757646fdc)
+
+**extract the file with unzip**
+````
+unzip apache-tomcat-8.5.100.zip
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/50af9db0-488a-477f-8fab-b82ba73b37bf)
+
+````
+cd apache-tomcat-8.5.100
+````
+````
+cd webapps
+````
+**install student.war file**
+````
+curl -O https://s3-us-west-2.amazonaws.com/studentapi-cit/student.war
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/376d328a-bc02-47ce-8fe7-c03e6638eb65)
+
+````
+cd ../lib
+````
+**install mysql connector jar file**
+````
+curl -O https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/4a221477-aa57-4659-b5c3-5b4644110105)
 
