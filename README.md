@@ -253,8 +253,7 @@ use studentapp;
 	PRIMARY KEY (student_id)  
 );
 ````
-![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/d3ee794e-9b97-402a-b452-13e3056bc655)
-
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/275f8a3d-a557-4ba7-bbbf-ca3f3332d5d5)
 
 ````
 show tables;
