@@ -180,6 +180,6 @@ chmod 600 terraform-key.pem
 yum install java -y
 ````
 **install binary package of apache-tomcat with zip link from its website**
-````
+
 ![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/4ae1ac24-b711-4c21-af65-ceb757646fdc)
 
