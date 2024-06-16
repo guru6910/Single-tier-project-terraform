@@ -32,6 +32,17 @@ resource "aws_subnet" "subnet-1" {
   }
 }
 
+resource "aws_subnet" "subnet-2" {
+  vpc_id = aws_vpc.vpc.id
+  cidr_block = "10.0.2.0/25"
+  availability_zone = "us-east-1b"
+  map_public_ip_on_launch = true 
+
+  tags = {
+    Name = "VM-2",
+  }
+}
+
 resource "aws_internet_gateway" "igw" {
     vpc_id = aws_vpc.vpc.id
     tags = {
@@ -119,8 +130,34 @@ resource "aws_instance" "instance" {
     Name = "VM-1"
   }
 }
+
 resource "aws_network_interface_sg_attachment" "sg2" {
   security_group_id = aws_security_group.sg1.id
   network_interface_id = aws_instance.instance.primary_network_interface_id
 
+}
+
+resource "aws_db_subnet_group" "subnet-group" {
+  name = "subnet-group"
+  subnet_ids = [aws_subnet.subnet-1.id,aws_subnet.subnet-2.id]
+  tags = {
+    Name = "subnet-group"
+  }
+}
+  
+resource "aws_db_instance" "rds" {
+  allocated_storage = 20
+  db_name = "student"
+  engine = "mariadb"
+  engine_version = "10.11.6"
+  username = "admin"
+  password = "passwd123"
+  instance_class = "db.t3.micro"
+  skip_final_snapshot = true
+  db_subnet_group_name = aws_db_subnet_group.subnet-group.name
+  vpc_security_group_ids = [aws_security_group.sg1.id]
+
+  tags = {
+    Name = "RDS"
+  }
 }
