@@ -217,6 +217,63 @@ chmod 600 terraform-key.pem
 ````
 ## ${\color{red} \textbf{Connect to Server}}$
 
+
+111111111111111111111111111111111
+
+
+**install mariadb and start**
+````
+yum install mariadb105-server -y
+systemctl start mariadb.server
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/51269f19-884a-4a88-979b-c534b9508ce9)
+
+### ${\color{green} \textbf{log in database}}$
+
+````
+mysql -h <endpoint of database> -u <uname> -p<password>
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/0329cdf3-e01a-4e3e-84ea-52dd3a82b8d6)
+
+````
+create database studentapp;
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/01d7c51d-f46d-4ce6-908f-daca100b2429)
+
+````
+use studentapp;
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/244218d0-6623-43bc-acda-ccd9554ece32)
+
+### ${\color{blue} \textbf{Create Table in DB}}$
+````
+ CREATE TABLE if not exists students(student_id INT NOT NULL AUTO_INCREMENT,
+  class_name VARCHAR(100) NOT NULL,
+  trainer_name VARCHAR(10) NOT NULL,
+  student_name VARCHAR(100) NOT NULL,     
+	student_age VARCHAR(3) NOT NULL,
+  subject_name VARCHAR(100) NOT NULL,           
+	PRIMARY KEY (student_id)  
+);
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/1ab9f632-72dd-4310-949e-38ac82462a58)
+
+````
+show tables;
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/48400c3d-29c1-4dd0-ab9c-4ff3e0fe0201)
+
+````
+describe students;
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/6de983e2-f2d2-4813-a04d-11c862c30eca)
+
+````
+exit
+````
+### ${\color{green} \textbf{log out database instance}}$
+
+## ${\color{red} \textbf{Setup of Apache-Tomcat}}$
 **install java**
 ````
 yum install java -y
@@ -254,3 +311,32 @@ curl -O https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar
 ````
 ![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/4a221477-aa57-4659-b5c3-5b4644110105)
 
+### ${\color{blue} \textbf{Modify Apache Tomcat/context.xml}}$
+````
+cd /opt/tomcat/apache-tomcat-9.0.89/conf/
+vim context.xml
+````
+**add username ,password ,DB-Endpoint ,DB-name**
+**add it under the context wor at the line of 21**
+````
+ <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+               maxTotal="100" maxIdle="30" maxWaitMillis="10000"
+               username="USERNAME" password="PASSWORD" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://DB-ENDPOINT:3306/DATABASE"/>
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/7160c2c6-c2cf-4890-a7bb-3871794b8173)
+
+**Start Tomcat**
+````
+cd ../bin
+chmod +x catalina.sh
+./catalina.sh start
+````
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/603153a3-bcc8-492a-b229-eb1255c7a63f)
+
+### $\color{red} \textbf{Go \ To \ Browser \ Hit \ Public-IP \ Nginx}$
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/d3f4d112-daef-4dca-9c04-9e4841ba0887)
+
+
+### $\color{red} \textbf{Here \ are \ the \ Output \ -Registered \ Student-Data}$
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/3f6f7e8d-ecd3-45ff-8e84-3201bfdc8c04)
