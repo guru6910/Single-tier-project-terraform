@@ -1,4 +1,4 @@
-# ${\color{red} \textbf{Project:Single-tier-terraform}}$
+# ${\color{red} \textbf{Project : Single-tier terraform}}$
 
 terraform {
   required_providers {
