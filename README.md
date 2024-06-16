@@ -264,7 +264,8 @@ show tables;
 ````
 describe students;
 ````
-![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/6de983e2-f2d2-4813-a04d-11c862c30eca)
+![image](https://github.com/guru6910/Single-tier-project-terraform/assets/169146749/d7486267-67e4-4837-8671-3e3ba596565d)
+
 
 ````
 exit
